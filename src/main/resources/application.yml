@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: movie-ticket-booking
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:5432/${DB_NAME:ticketbooking}
+    username: ${DB_USER:postgres}
+    password: ${DB_PASSWORD:postgres}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: 6379
+  session:
+    # A signed-in session ends after this much inactivity.
+    timeout: 30m
+
+server:
+  servlet:
+    session:
+      cookie:
+        # Not readable from JavaScript, and not sent on cross-site POSTs.
+        http-only: true
+        same-site: lax
+
+booking:
+  # How long selected seats stay held in Redis while the user pays.
+  seat-hold-duration: 5m
+  expiry-check-interval-ms: 30000
